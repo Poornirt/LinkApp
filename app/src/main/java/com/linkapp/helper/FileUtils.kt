@@ -121,6 +121,7 @@ object FileUtils {
         return try {
             val directory = File("$downloadDirectory/LinkApp")
             directory.mkdirs()
+            if (directory.exists()) directory.delete()
             val csvFile = File(directory, FILE_NAME)
             csvFile.createNewFile()
             if (csvFile.exists()) {
