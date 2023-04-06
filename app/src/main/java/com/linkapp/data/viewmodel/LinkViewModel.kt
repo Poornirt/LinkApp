@@ -19,7 +19,8 @@ class LinkViewModel(private val mLinkRepository: LinkRepository?) : ViewModel() 
     var insertLinkLiveData = MutableLiveData<Response<Unit>>()
     private var _insertLinksLiveData = insertLinkLiveData
 
-
+    var retrieveListLiveData = MutableLiveData<Response<ArrayList<Link>>>()
+    private var _retrieveListLiveData = retrieveListLiveData
 
     fun fetchAllLinks() {
         viewModelScope.launch {
@@ -33,6 +34,14 @@ class LinkViewModel(private val mLinkRepository: LinkRepository?) : ViewModel() 
         viewModelScope.launch {
             mLinkRepository?.insertLink(link)?.collect {
                 _insertLinksLiveData.value = it
+            }
+        }
+    }
+
+    fun retrieveListFromMap(list:List<Map<String,String>>) {
+        viewModelScope.launch {
+            mLinkRepository?.retrievedList(list)?.collect {
+                _retrieveListLiveData.value = it
             }
         }
     }

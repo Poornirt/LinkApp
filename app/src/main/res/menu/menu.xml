@@ -3,10 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_search"
-        android:icon="@drawable/ic_action_action_search"
-        android:orderInCategory="100"
-        android:title="@string/abc_search_hint"
-        app:showAsAction="always" />
+        android:id="@+id/action_restore_from_file"
+        android:title="@string/restore"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/action_backup_share"
+        android:title="@string/backup_share"
+        app:showAsAction="collapseActionView" />
+
+    <item
+        android:id="@+id/action_backup_download"
+        android:title="@string/backup_download"
+        app:showAsAction="collapseActionView" />
 
 </menu>

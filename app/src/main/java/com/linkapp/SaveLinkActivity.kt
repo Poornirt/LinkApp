@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -19,8 +21,10 @@ import com.linkapp.data.response.Response
 import com.linkapp.data.viewmodel.LinkViewModel
 import com.linkapp.data.viewmodel.ViewModelFactory
 import com.linkapp.database.DatabaseHelper
+import com.linkapp.helper.ViewExt.showToast
 import com.linkapp.helper.VoiceRecognize
 import com.linkapp.jdo.Link
+import kotlin.random.Random
 
 class SaveLinkActivity : AppCompatActivity() {
 
@@ -43,7 +47,7 @@ class SaveLinkActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_save_link)
         mRecyclerView = findViewById(R.id.recycler_view)
-        databaseHelper = DatabaseHelper(this, null)
+        //databaseHelper = DatabaseHelper(this, null)
         observeViewModel()
         getLinkFromIntent()
         showDialog()
@@ -54,10 +58,10 @@ class SaveLinkActivity : AppCompatActivity() {
         mViewModel.insertLinkLiveData.observe(this) {
             when (it) {
                 is Response.Success -> {
-                    Toast.makeText(this, "Link saved!!", Toast.LENGTH_SHORT).show()
+                    showToast("Link saved!!")
                 }
                 is Response.Error -> {
-                    Toast.makeText(this, "Unable to save the link", Toast.LENGTH_SHORT).show()
+                   showToast("Unable to save the link")
                 }
                 is Response.Loading -> {
                 }
@@ -69,24 +73,31 @@ class SaveLinkActivity : AppCompatActivity() {
         mAlertDialog = AlertDialog.Builder(this).create()
         val view = LayoutInflater.from(this).inflate(R.layout.dialog_layout, null)
         mAlertDialog.setView(view)
-        val lSaveLinkButton: Button = view.findViewById(R.id.saveLinkBt)
+        val lSaveLinkButton: TextView = view.findViewById(R.id.saveLinkBt)
         mName = view.findViewById(R.id.name_of_link)
-        val voiceClient: ImageButton = view.findViewById(R.id.voice_client)
+        val voiceClient: ImageView = view.findViewById(R.id.voice_client)
+        val cancel: TextView = view.findViewById(R.id.cancelBt)
         mAlertDialog.setCancelable(false)
         mAlertDialog.show()
         voiceClient.setOnClickListener {
             VoiceRecognize(this).setUpVoiceRecognition()
         }
+        cancel.setOnClickListener {
+            mAlertDialog.dismiss()
+            finish()
+            navigateToHomePage()
+        }
         lSaveLinkButton.setOnClickListener {
             if (mName.text.isNotEmpty()) {
-                val link = Link(id = 0,name = mName.text.toString(), link_url =  mUrl, image_url = mImageUrl)
+                val link = Link(id = Random.nextInt(),name = mName.text.toString(), link_url =  mUrl, image_url = mImageUrl)
                 mLinkJdoList.add(link)
                 mViewModel.insertAllLink(mLinkJdoList)
                 //databaseHelper.addLinkDetails(mLinkJdoList)
                 mAlertDialog.dismiss()
+                finish()
                 navigateToHomePage()
             } else {
-                Toast.makeText(this, "Text Field cannot be empty!!", Toast.LENGTH_SHORT).show()
+                showToast( "Text Field cannot be empty!!")
             }
         }
     }

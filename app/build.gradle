@@ -9,7 +9,7 @@ android {
     buildToolsVersion "29.0.3"
 
     defaultConfig {
-        applicationId "com.linkapp"
+        applicationId "com.example.linkapp"
         minSdkVersion 24
         targetSdkVersion 33
         versionCode 1
@@ -58,4 +58,5 @@ dependencies {
     //viewmodel scope
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
 
+    implementation "com.github.doyaaaaaken:kotlin-csv-jvm:0.9.0"
 }

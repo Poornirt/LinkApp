@@ -1,28 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_horizontal">
+    android:padding="12dp"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/name_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/enter_name"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/name_of_link"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/name_title"
+        android:layout_marginTop="12dp"
+        android:layout_toStartOf="@id/voice_client" />
 
-    <Button
-        android:id="@+id/saveLinkBt"
+    <ImageView
+        android:id="@+id/voice_client"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/name_title"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="12dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/mic" />
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/name_of_link"
-        android:text="Save"/>
+        android:layout_alignParentEnd="true"
+        android:layout_margin="16dp"
+        android:orientation="horizontal">
 
-    <ImageButton
-        android:id="@+id/voice_client"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_toRightOf="@id/name_of_link"
-        android:scaleType="fitCenter"
-        android:src="@drawable/mic"/>
+        <TextView
+            android:id="@+id/cancelBt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:textColor="@color/app_theme_secondary"
+            android:text="@string/cancel"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/saveLinkBt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/app_theme_secondary"
+            android:padding="8dp"
+            android:text="@string/save"
+            android:textSize="16sp" />
+
+    </LinearLayout>
 
 </RelativeLayout>

@@ -58,4 +58,25 @@ class LinkRepository(private var ioDispatcher: CoroutineDispatcher,private var l
         }
     }.flowOn(ioDispatcher)
 
+    suspend fun retrievedList(list:List<Map<String,String>>) = flow {
+        try {
+            val lLinkList = arrayListOf<Link>()
+            list.forEach { map ->
+                map.let {
+                    lLinkList.add(
+                        Link(
+                            id = it["[id]"]?.toInt() ?: 0,
+                            name = it["[name]"] ?: "",
+                            link_url = it["[url]"] ?: "",
+                            image_url = it["[image_url]"]
+                        )
+                    )
+                }
+            }
+            emit(Response.Success(lLinkList))
+        } catch (e: Exception) {
+            emit(Response.Error(e.message))
+        }
+    }.flowOn(ioDispatcher)
+
 }
